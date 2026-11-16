@@ -701,7 +701,7 @@ const socCaseSteps = [
   }
 ];
 
-const initialState = { curriculumVersion: 2, completed: [], scores: {}, labs: [], incidentChecks: [], phishing: { step: 0, complete: false, feedback: "" }, socCase: { step: 0, score: 0, complete: false, feedback: "" }, theme: "dark", terminal: { cwd: "/home/learner", files: null } };
+const initialState = { curriculumVersion: 2, completed: [], scores: {}, labs: [], incidentChecks: [], phishing: { step: 0, complete: false, feedback: "" }, socCase: { step: 0, score: 0, complete: false, feedback: "" }, ethicsAccepted: false, theme: "dark", terminal: { cwd: "/home/learner", files: null } };
 let state = loadState();
 let activeView = "home";
 let activePath = "";
@@ -710,8 +710,6 @@ let toastTimer;
 let flashIndex = 0;
 let flashRevealed = false;
 let activeAttackPhase = 0;
-let activeNarrationId = "";
-let speechRunToken = 0;
 
 const attackPhases = [
   { title: "باب مفتوح أو خدعة", description: "ممكن البداية تبقى كلمة سر ضعيفة أو متكررة، رسالة تصيّد، برنامج قديم، أو إعداد غلط. دي أمثلة على أسباب شائعة، مش خطوات تنفيذ.", defense: "اقفل الباب: كلمة سر فريدة، تحديثات، تحقق من الروابط، ومصادقة متعددة العوامل." },
@@ -783,143 +781,10 @@ function notify(message) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
 }
-function setLessonAudioStatus(id, message) {
-  const status = document.getElementById(`audio-status-${id}`);
-  if (status) status.textContent = message;
-}
-function findArabicVoice(availableVoices = window.speechSynthesis.getVoices()) {
-  const voices = availableVoices.filter(voice => voice.localService === true);
-  const egyptianVoice = voices.find(voice => /^ar[-_]EG(?:$|[-_])/i.test(voice.lang) || /egypt|egyptian|مصر/i.test(voice.name));
-  if (egyptianVoice) return { voice: egyptianVoice, isEgyptian: true };
-  const arabicVoice = voices.find(voice => /^ar(?:[-_]|$)/i.test(voice.lang));
-  return arabicVoice ? { voice: arabicVoice, isEgyptian: false } : null;
-}
-function waitForSpeechVoices(timeoutMs = 3000) {
-  const synth = window.speechSynthesis;
-  return new Promise(resolve => {
-    let settled = false;
-    let timeoutId;
-    let pollId;
-    const finish = (allowEmpty = false) => {
-      if (settled) return;
-      const voices = synth.getVoices();
-      if (!allowEmpty && voices.length === 0) return;
-      settled = true;
-      clearTimeout(timeoutId);
-      clearInterval(pollId);
-      synth.removeEventListener("voiceschanged", checkVoices);
-      resolve(voices);
-    };
-    const checkVoices = () => finish();
-    synth.addEventListener("voiceschanged", checkVoices);
-    timeoutId = setTimeout(() => finish(true), timeoutMs);
-    pollId = setInterval(checkVoices, 100);
-    finish();
-  });
-}
-function lessonNarrationText(id) {
-  const lesson = allLessons().find(item => item.id === id);
-  const guide = lessonGuides[id];
-  const expansion = lessonExpansions[id];
-  const scenario = lessonScenarios[id];
-  if (!lesson || !guide || !expansion || !scenario) return "";
-  const textFromMarkup = value => {
-    const template = document.createElement("template");
-    template.innerHTML = value;
-    return template.content.textContent.replace(/\s+/g, " ").trim();
-  };
-  return [
-    `الدرس: ${lesson.title}.`,
-    `هدف الدرس: ${lesson.objective}.`,
-    textFromMarkup(lesson.body),
-    `شرح أعمق: ${guide.explanation}.`,
-    `الفكرة الأساسية: ${expansion.coreIdea}.`,
-    `مثال عملي: ${expansion.example}.`,
-    `خد بالك: ${expansion.watchOut}.`,
-    `موقف شغل محاكاة: ${scenario.situation}.`,
-    `خطوات آمنة: ${scenario.response}.`,
-    `مخرج الشغل: ${scenario.deliverable}.`,
-    `تطبيق عملي آمن: ${lesson.exercise}.`
-  ].filter(Boolean).join(" ");
-}
-function splitNarration(text, maxLength = 180) {
-  const chunks = [];
-  let chunk = "";
-  for (const word of text.split(/\s+/)) {
-    const next = chunk ? `${chunk} ${word}` : word;
-    if (next.length > maxLength && chunk) {
-      chunks.push(chunk);
-      chunk = word;
-    } else {
-      chunk = next;
-    }
-  }
-  if (chunk) chunks.push(chunk);
-  return chunks;
-}
-function speakNarrationChunk(id, chunks, index, voiceInfo, token) {
-  if (token !== speechRunToken) return;
-  if (index >= chunks.length) {
-    activeNarrationId = "";
-    setLessonAudioStatus(id, "خلص شرح الدرس. تقدر تسمعه تاني أو تكمل التدريب.");
-    return;
-  }
-  const utterance = new SpeechSynthesisUtterance(chunks[index]);
-  utterance.voice = voiceInfo.voice;
-  utterance.lang = voiceInfo.isEgyptian ? "ar-EG" : voiceInfo.voice.lang;
-  utterance.rate = 0.9;
-  utterance.pitch = 1.02;
-  utterance.onend = () => speakNarrationChunk(id, chunks, index + 1, voiceInfo, token);
-  utterance.onerror = event => {
-    if (token !== speechRunToken || event.error === "canceled" || event.error === "interrupted") return;
-    window.speechSynthesis.cancel();
-    activeNarrationId = "";
-    setLessonAudioStatus(id, "تعذر تشغيل الصوت. راجع إعدادات الصوت في المتصفح وحاول تاني.");
-  };
-  window.speechSynthesis.speak(utterance);
-}
-async function speakLesson(id) {
-  if (!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
-    setLessonAudioStatus(id, "القراءة الصوتية مش مدعومة في المتصفح ده.");
-    return;
-  }
-  const text = lessonNarrationText(id);
-  if (!text) {
-    setLessonAudioStatus(id, "تعذر تجهيز نص الدرس للاستماع. حدّث الصفحة وحاول تاني.");
-    return;
-  }
-  const token = ++speechRunToken;
-  window.speechSynthesis.cancel();
-  activeNarrationId = id;
-  setLessonAudioStatus(id, "بنجهّز الصوت العربي المحلي...");
-  const voices = await waitForSpeechVoices();
-  if (token !== speechRunToken || activeNarrationId !== id) return;
-  const voiceInfo = findArabicVoice(voices);
-  if (!voiceInfo) {
-    activeNarrationId = "";
-    setLessonAudioStatus(id, "مش لاقيين صوت عربي محلي مثبت على الجهاز. فعّل صوت Arabic (Egypt) أو صوت عربي محلي من إعدادات النظام والمتصفح، وبعدها جرّب تاني.");
-    return;
-  }
-  setLessonAudioStatus(id, voiceInfo.isEgyptian
-    ? "جاري قراءة الشرح بصوت عربي (مصر) محلي متاح على جهازك..."
-    : "جاري القراءة بأقرب صوت عربي محلي؛ الصوت المصري مش مثبت على جهازك...");
-  speakNarrationChunk(id, splitNarration(text), 0, voiceInfo, token);
-}
-function stopLessonSpeech(id) {
-  if (activeNarrationId !== id) return;
-  speechRunToken += 1;
-  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-  activeNarrationId = "";
-  setLessonAudioStatus(id, "تم إيقاف قراءة الشرح.");
-}
-function stopActiveLessonSpeech() {
-  if (activeNarrationId) stopLessonSpeech(activeNarrationId);
-}
 function render() {
-  stopActiveLessonSpeech();
   document.documentElement.dataset.theme = state.theme;
   const app = document.getElementById("app");
-  const view = {
+  const view = state.ethicsAccepted ? ({
     home: renderHome,
     paths: () => renderPaths(activePath),
     labs: renderLabs,
@@ -927,7 +792,7 @@ function render() {
     incident: renderIncident,
     glossary: renderGlossary,
     achievements: renderAchievements
-  }[activeView] || renderHome;
+  }[activeView] || renderHome) : renderEthicsAgreement;
   app.innerHTML = view();
   document.querySelectorAll(".nav-link").forEach(button => button.classList.toggle("active", button.dataset.view === activeView));
   bindViewEvents();
@@ -938,6 +803,18 @@ function renderEthicsPledge(compact = false) {
     <div><span class="eyebrow">${compact ? "قاعدة ثابتة في كل درس" : "الخطوة صفر · الأمان والأخلاق قبل الأدوات"}</span><h2 id="ethics-title">اتعلّم عشان تحمي، وما تضرّش حد</h2>
       <p>المحتوى ده للتعليم والتوعية الدفاعية فقط، ومش إذن لاختبار أي جهاز أو حساب أو شبكة. منشئ المحتوى لا يوافق على الاستخدام المخالف ولا يشجّعه، وكل شخص مسؤول عن أفعاله. مخالفة القانون ممكن تعرّضك للمساءلة وعقوبات قد تصل للحبس حسب قانون بلدك.</p>
       <p class="ethics-guidance"><strong>اعمل الخير وخد بالأسباب:</strong> استأذن كتابةً، التزم بالنطاق، ما تغيّرش أو تمسح دليل، وبلّغ القنوات الرسمية. التدريب هنا محاكاة محلية ببيانات مصطنعة فقط.</p>
+    </div>
+  </section>`;
+}
+function renderEthicsAgreement() {
+  return `<section class="ethics-gate" aria-labelledby="ethics-gate-title">
+    <span class="eyebrow">قبل ما تبدأ التعلّم</span>
+    <h1 id="ethics-gate-title">التزامك هو أول خطوة في الطريق</h1>
+    <p class="subheading">راجع المبادئ دي ووافق عليها عشان تفتح محتوى المنصة. موافقتك بتتحفظ على المتصفح ده فقط.</p>
+    ${renderEthicsPledge()}
+    <div class="panel ethics-consent">
+      <label class="ethics-consent-label"><input type="checkbox" data-ethics-agreement> أقر إني فهمت إن المحتوى للتعليم والدفاع فقط، وإن التدريبات محاكاة، ومش هختبر أي نظام من غير إذن مكتوب ونطاق واضح، ومش هستخدم المعرفة للإضرار أو مخالفة القانون.</label>
+      <button class="button primary" type="button" data-ethics-accept disabled>أوافق وأبدأ التعلّم</button>
     </div>
   </section>`;
 }
@@ -1033,8 +910,11 @@ function renderLessonVisual(guide) {
 }
 function renderLessonAudio(id) {
   return `<section class="lesson-audio" aria-label="الاستماع للشرح">
-    <div class="lesson-audio-actions"><button class="button small primary" type="button" data-speak-lesson="${id}"><span aria-hidden="true">🔊</span> اسمع الشرح</button><button class="button small ghost" type="button" data-stop-lesson="${id}">إيقاف الصوت</button></div>
-    <p class="lesson-audio-status" id="audio-status-${id}" role="status" aria-live="polite">الصوت بيتولّد محليًا؛ هنفضّل صوت عربي مصري محلي مثبت على جهازك، وإلا هنستخدم أقرب صوت عربي محلي متاح.</p>
+    <audio class="lesson-audio-player" controls preload="none" src="audio/${id}.mp3" aria-label="شرح صوتي مسجل مسبقًا للدرس">
+      المتصفح ده مش بيدعم تشغيل الصوت. افتح التسجيل من رابط تنزيل الملف.
+    </audio>
+    <a class="lesson-audio-download" href="audio/${id}.mp3" download>نزّل التسجيل الصوتي</a>
+    <p class="lesson-audio-status">ده ملف صوتي جاهز بصوت عربي مصري؛ الموقع مش بيولّد الصوت من النص.</p>
   </section>`;
 }
 function renderLessonCoach(expansion) {
@@ -1200,8 +1080,17 @@ function renderAchievements() {
   return `<div class="eyebrow">كل خطوة تستحق التقدير</div><h1>إنجازاتك</h1><p class="subheading">تُمنح الشارات تلقائيًا عند إكمال الأنشطة. استمر بالتعلّم وفق وتيرتك.</p><div class="stats-grid"><div class="stat-card"><strong>${completedCount()}</strong><span>درس مكتمل</span></div><div class="stat-card"><strong>${state.labs.length}</strong><span>مختبر مكتمل</span></div><div class="stat-card"><strong>${badges.filter(b => b.earned).length}</strong><span>شارات محققة</span></div><div class="stat-card"><strong>${Math.round(completedCount() / totalLessons() * 100)}%</strong><span>تقدم المسارات</span></div></div><div class="achievement-grid">${badges.map(b => `<article class="achievement ${b.earned ? "earned" : ""}"><span class="achievement-icon">${b.icon}</span><h3>${b.title} ${b.earned ? "✓" : ""}</h3><p class="muted">${b.description}</p><span class="tag">${b.earned ? "تم الإنجاز" : "لم تُفتح بعد"}</span></article>`).join("")}</div><div class="panel" style="margin-top:1.2rem"><h2>نتائج الاختبارات</h2>${Object.keys(state.scores).length ? `<ul>${Object.entries(state.scores).map(([id, score]) => `<li>${escapeHtml(allLessons().find(item => item.id === id)?.title || id)}: ${score ? "إجابة صحيحة ✓" : "أعد المحاولة"}</li>`).join("")}</ul>` : `<p class="muted">لم تُسجل إجابات بعد. افتح درسًا وجرّب الاختبار القصير.</p>`}</div>`;
 }
 function bindViewEvents() {
-  document.querySelectorAll("[data-speak-lesson]").forEach(button => button.addEventListener("click", () => speakLesson(button.dataset.speakLesson)));
-  document.querySelectorAll("[data-stop-lesson]").forEach(button => button.addEventListener("click", () => stopLessonSpeech(button.dataset.stopLesson)));
+  document.querySelectorAll("[data-ethics-agreement]").forEach(input => input.addEventListener("change", () => {
+    const acceptButton = document.querySelector("[data-ethics-accept]");
+    if (acceptButton) acceptButton.disabled = !input.checked;
+  }));
+  document.querySelectorAll("[data-ethics-accept]").forEach(button => button.addEventListener("click", () => {
+    const agreement = document.querySelector("[data-ethics-agreement]");
+    if (!agreement || !agreement.checked) return;
+    state.ethicsAccepted = true;
+    saveState();
+    render();
+  }));
   document.getElementById("app").querySelectorAll("[data-view]").forEach(button => button.addEventListener("click", () => { activeView = button.dataset.view; activePath = ""; openLesson = ""; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }));
   document.querySelectorAll("[data-open-path]").forEach(button => button.addEventListener("click", () => {
     activeView = "paths";
@@ -1335,7 +1224,6 @@ function bindViewEvents() {
   }
 }
 function renderPathsIntoApp(pathId) {
-  stopActiveLessonSpeech();
   activePath = pathId;
   document.getElementById("app").innerHTML = renderPaths(pathId);
   document.querySelectorAll(".nav-link").forEach(button => button.classList.toggle("active", button.dataset.view === "paths"));

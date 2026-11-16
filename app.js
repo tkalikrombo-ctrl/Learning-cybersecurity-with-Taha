@@ -320,6 +320,144 @@ const lessonGuides = {
   }
 };
 
+const lessonExpansions = {
+  "foundations-0": {
+    coreIdea: "المعالج ينفذ التعليمات، وRAM مساحة عمل مؤقتة، والتخزين يحفظ الملفات بعد إغلاق الجهاز. نظام التشغيل بينظم العلاقة بينهم وبين البرامج.",
+    example: "لما تفتح المتصفح، البرنامج بيستخدم المعالج وRAM؛ ولما تحفظ ملف، بيتكتب على وحدة التخزين.",
+    watchOut: "إغلاق البرنامج ممكن يفضّي بيانات مؤقتة، لكنه مش بديل عن حفظ الملف أو نسخه الاحتياطي."
+  },
+  "foundations-1": {
+    coreIdea: "الحساب يحدد مين المستخدم، والصلاحيات تحدد إيه المسموح له يعمله في كل ملف أو برنامج.",
+    example: "ممكن موظف يقرأ تقريرًا مشتركًا لكن ما يقدرش يعدّل النسخة الأصلية؛ ده يقلل أخطاء التعديل.",
+    watchOut: "نقل الملف لمجلد تاني مش معناه إن عندك نسخة احتياطية، والصلاحية الواسعة مش حل لمشكلة وصول."
+  },
+  "foundations-2": {
+    coreIdea: "الإنترنت هو الشبكة، والويب خدمة عليها. المتصفح يطلب صفحة من خادم، واسم النطاق بيوجهك للخدمة المقصودة.",
+    example: "عنوان الصفحة فيه اسم نطاق ومسار؛ المتصفح يترجم الاسم لعنوان شبكة ثم يعرض الرد.",
+    watchOut: "HTTPS بيحمي الاتصال أثناء النقل، لكنه ما يثبتش وحده إن الموقع تابع للجهة اللي بتدّعيها الصفحة."
+  },
+  "linux-0": {
+    coreIdea: "الطرفية بتنفّذ أوامر في مسار حالي؛ اعرف مكانك ومحتويات المجلد قبل ما تختار الخطوة التالية.",
+    example: "ابدأ بعرض المساعدة، اعرف المسار الحالي، اعرض الملفات، وبعدها انتقل لمجلد تدريب ظاهر قدامك.",
+    watchOut: "الأوامر مش كلها للعرض؛ افهم أثر الأمر قبل استخدام حاجة ممكن تنشئ أو تنقل أو تمسح ملف."
+  },
+  "linux-1": {
+    coreIdea: "كل أمر ملف له أثر مختلف: القراءة تعرض المحتوى، والبحث يحدد سطورًا، والنسخ ينشئ نسخة، والنقل يغير المكان.",
+    example: "في عينة سجل، دور على كلمة مرتبطة بالسؤال وسجل اسم العينة وعدد النتائج قبل ما تستنتج معناها.",
+    watchOut: "ما تشتغلش على الدليل الأصلي أثناء التدريب، وما تعتبرش ظهور كلمة واحدة إثباتًا لوجود حادث."
+  },
+  "linux-2": {
+    coreIdea: "الصلاحية بتحدد القراءة والكتابة والتنفيذ، والعملية برنامج شغال. قلّل الوصول للحد اللي المهمة تحتاجه.",
+    example: "قبل مراجعة ملف تدريبي، اتأكد إنك محتاج تقرأه فقط؛ ما تطلبش تعديل أو تنفيذ من غير سبب.",
+    watchOut: "توسيع الصلاحيات للجميع ممكن يسهّل الخطأ ويزود أثره؛ راجع المالك والهدف بدل التخمين."
+  },
+  "defense-0": {
+    coreIdea: "عنوان IP يحدد واجهة شبكة، والمنفذ يحدد الخدمة اللي تستقبل الاتصال على الجهاز.",
+    example: "تقرير جرد تدريبي يربط الجهاز بعنوانه وخدمة الويب بمنفذها؛ قارن التقرير بالمخطط المعتمد.",
+    watchOut: "وجود عنوان أو منفذ في سجل مش دليل اختراق لوحده؛ السياق والمالك والنشاط المعتاد مهمين."
+  },
+  "defense-1": {
+    coreIdea: "DNS دليل يربط اسم النطاق بعنوان شبكة عشان الأجهزة تقدر توصل للخدمة المطلوبة.",
+    example: "وقت مراجعة اسم غير متوقع، دوّن الاسم والوقت والنتيجة الظاهرة وقارنها بمصدر رسمي موثوق.",
+    watchOut: "نتيجة قديمة ممكن تكون محفوظة مؤقتًا، وتغيّر العنوان وحده ما يثبتش سبب التغيير أو خطورته."
+  },
+  "defense-2": {
+    coreIdea: "HTTP يصف الطلب والرد بين المتصفح والخادم؛ HTTPS يضيف حماية مشفرة لقناة الاتصال.",
+    example: "اقرأ اسم النطاق ورمز حالة الرد في عينة تعليمية، وبعدها اشرح إيه اللي يحميه HTTPS.",
+    watchOut: "القفل مش شهادة إن الجهة موثوقة؛ راجع اسم النطاق من قناة رسمية قبل إرسال بيانات."
+  },
+  "defense-3": {
+    coreIdea: "الجدار الناري يقارن الاتصال بقواعد محددة، ويسجل قرار السماح أو المنع بحسب الإعداد.",
+    example: "راجع قاعدة تدريبية واسأل: مين مالكها؟ إيه الخدمة المطلوبة؟ وإيه أضيق نطاق يحقق الغرض؟",
+    watchOut: "أي تغيير يحتاج موافقة وتوثيق وخطة رجوع؛ القاعدة الواسعة ممكن تعرّض خدمات أكتر من اللازم."
+  },
+  "programming-0": {
+    coreIdea: "المتغير اسم لقيمة، ونوع القيمة يحدد العمليات المناسبة. الأسماء الواضحة تسهّل القراءة والمراجعة.",
+    example: "احفظ عددًا في متغير رقمي ونوع نتيجة في متغير نصي، ثم اطبعهم وشوف شكل الناتج.",
+    watchOut: "النص اللي شكله رقم مش دايمًا رقم؛ تحقق من النوع قبل الحساب وما تستخدمش بيانات شخصية في الأمثلة."
+  },
+  "programming-1": {
+    coreIdea: "الشرط يختار مسارًا حسب النتيجة، والتكرار يطبق نفس الفحص على عناصر متعددة.",
+    example: "مرّ على قائمة أحداث وهمية واطبع ملاحظة للمراجعة لما تكون النتيجة failed.",
+    watchOut: "اختبر قائمة فارغة وحالة غير متوقعة؛ التصنيف الآلي مؤشر للمراجعة مش حكم على وجود حادث."
+  },
+  "programming-2": {
+    coreIdea: "الدالة بتجمع مهمة باسم واضح، تستقبل مدخلات، وترجع نتيجة ممكن اختبارها.",
+    example: "اكتب دالة تعدّ عناصر نوع محدد، وجربها على قائمة صغيرة عارف نتيجتها مسبقًا.",
+    watchOut: "اختبار واحد مش كفاية؛ جرّب مدخلات عادية وفارغة وحالات حدية قبل الاعتماد على النتيجة."
+  },
+  "security-0": {
+    coreIdea: "المخاطر بتربط أصلًا مهمًا بتهديد واحتمال وأثر، وبعدها بنختار ضابطًا يقلل الضرر.",
+    example: "ملف عمل مهم يحتاج صلاحيات مناسبة ونسخة احتياطية؛ نوع الحماية يتحدد حسب أثر فقده أو كشفه.",
+    watchOut: "مش كل خطر له نفس الأولوية؛ وثّق الاحتمال والأثر وحدود المعلومات قبل ترتيب الإصلاح."
+  },
+  "security-1": {
+    coreIdea: "كلمة فريدة تقلل إعادة استخدام بيانات الدخول، وMFA يضيف خطوة تحقق مستقلة عن كلمة السر.",
+    example: "راجع إعدادات حساب تدريبي: هل كلمة السر فريدة؟ هل وسيلة الاسترداد محدثة؟ وهل التنبيه يصل لقناة موثوقة؟",
+    watchOut: "رمز التحقق سر مؤقت؛ ما تشاركوش مع أي شخص حتى لو قال إنه من الدعم."
+  },
+  "security-2": {
+    coreIdea: "التصيد يحاول دفعك لتصرف مستعجل؛ خُد وقتك وتحقق من المرسل والطلب بقناة مستقلة.",
+    example: "في رسالة وهمية، افحص عنوان المرسل والنطاق وسبب الاستعجال، واستخدم زر الإبلاغ الرسمي.",
+    watchOut: "الشعار أو HTTPS مش دليل كفاية؛ وما تفتحش مرفقًا مش متوقع عشان تعرف إذا كان خطرًا."
+  },
+  "security-3": {
+    coreIdea: "التشفير يحمي سرية البيانات بمفتاح، والنسخ الاحتياطي يساعد على استعادة البيانات بعد فقد أو تلف.",
+    example: "خطة تدريبية تحدد مكان النسخة الاحتياطية، مين يقدر يستعيدها، وإمتى آخر مرة اتجربت.",
+    watchOut: "نسخة غير مجرّبة ممكن ما تشتغلش وقت الحاجة؛ احمِ المفاتيح وخلي الاستعادة تحت إجراء معتمد."
+  },
+  "web-0": {
+    coreIdea: "اعتبر كل مدخل غير موثوق لحد ما الخادم يتحقق من نوعه وحدوده، وبعدها اعرضه بطريقة آمنة.",
+    example: "نموذج تجريبي يراجع طول الاسم وصيغته في الخادم قبل حفظه أو عرضه.",
+    watchOut: "التحقق في المتصفح يحسّن الاستخدام لكنه مش كفاية؛ القرار الأمني لازم يحصل على الخادم."
+  },
+  "web-1": {
+    coreIdea: "استعلامات قاعدة البيانات لازم تفصل قيمة المستخدم عن بنية الأمر، مع صلاحيات قاعدة بيانات محدودة.",
+    example: "في مراجعة كود محلية، تأكد إن التطبيق يستخدم استعلامات معلّمة بدل تركيب النصوص يدويًا.",
+    watchOut: "ما تجربش مدخلات هجومية على موقع حي؛ راجع الكود أو استخدم بيانات مختبر مصطنعة ومصرح بها."
+  },
+  "web-2": {
+    coreIdea: "البيانات اللي كتبها المستخدم لازم تفضل نصًا عند العرض، مش تعليمات يفسرها المتصفح.",
+    example: "راجع مسار تعليق تدريبي من الإدخال للحفظ للعرض، وحدد موضع ترميز المخرجات.",
+    watchOut: "طريقة الترميز تعتمد على مكان العرض؛ استخدم قوالب وواجهات آمنة ولا تنفذ محتوى غير موثوق."
+  },
+  "web-3": {
+    coreIdea: "المصادقة تجاوب مين المستخدم، والتفويض يحدد إيه المسموح له يعمله على كل مورد.",
+    example: "مصفوفة تدريبية توضح إن دور القارئ يشوف سجله فقط، وإن الخادم يراجع كل طلب.",
+    watchOut: "إخفاء زر في الواجهة مش حماية؛ الخادم لازم يتحقق من الصلاحية كل مرة."
+  },
+  "response-0": {
+    coreIdea: "السجلات توثق أحداثًا بوقت ومصدر ونتيجة؛ ربطها زمنيًا يساعد على فهم السياق.",
+    example: "رتّب أحداث عينة حسب الوقت والمنطقة الزمنية، واربط كل ملاحظة بمعرّف السجل الأصلي.",
+    watchOut: "سجل ناقص أو وقت مختلف ممكن يغيّر الصورة؛ افصل اللي تثبته البيانات عن استنتاجك."
+  },
+  "response-1": {
+    coreIdea: "التنبيه إشارة تحتاج فرزًا؛ قيّم الأثر والثقة والمعلومات الناقصة قبل التصعيد.",
+    example: "قارن تنبيه دخول بسياق السفر ومصدر آخر مصرح به، ثم وثق سبب القرار والخطوة التالية.",
+    watchOut: "ما تتجاهلش التنبيه وما تعلنش اختراقًا قبل التحقق؛ اتبع مستوى التصعيد المعتمد."
+  },
+  "response-2": {
+    coreIdea: "الاستجابة تمر بمراحل منظمة من الاستعداد والتحقق للاحتواء والتعافي والتعلم من الحادث.",
+    example: "تقرير تدريبي يكتب الوقت والإجراء والمسؤول والدليل لكل خطوة ضمن خطة الفريق.",
+    watchOut: "ما تطفّيش أو تعزل جهازًا من نفسك؛ نفذ الإجراء فقط حسب صلاحيتك وخطة الاستجابة."
+  },
+  "capstone-0": {
+    coreIdea: "مراجعة التطبيق تبدأ بنطاق مكتوب، ثم تتبع البيانات والأدوار، ثم ترتب الإصلاحات حسب الأثر.",
+    example: "على تطبيق محلي وهمي، ارسم من أين يدخل الحقل وأين يتحقق منه وأين يُعرض.",
+    watchOut: "أي ملاحظة لازم تدعمها بدليل آمن؛ ما توسعش الاختبار خارج النطاق المصرح."
+  },
+  "capstone-1": {
+    coreIdea: "تقرير الحادث يربط الأحداث بمصادرها ويفصل الحقيقة عن الاحتمال والمعلومة الناقصة.",
+    example: "رتّب بلاغًا وتنبيهًا وسجلًا مصطنعًا في خط زمني، واكتب درجة الثقة وسببها.",
+    watchOut: "التزامن بين حدثين مش دليل إن واحد سبب التاني؛ اطلب تحققًا بدل التخمين."
+  },
+  "capstone-2": {
+    coreIdea: "المستوى يظهر في شرح قرارك ودليلك ومعرفتك بحدودك، مش في تجربة أدوات على أهداف عشوائية.",
+    example: "اختار مهارة، اعمل تمرينًا آمنًا، احتفظ بالمخرج، وحدد سؤالًا واحدًا لمراجعته.",
+    watchOut: "ما تستخدمش أنظمة عامة لقياس مستواك؛ التزم بمختبر مصرح به وقيّم تقدمك بمخرجات واضحة."
+  }
+};
+
 const diagramIcons = {
   computer: '<rect x="7" y="9" width="26" height="19" rx="3"/><path d="M15 34h10M20 28v6"/>',
   chip: '<rect x="11" y="11" width="18" height="18" rx="3"/><path d="M16 16h8v8h-8zM20 5v6M20 29v6M5 20h6M29 20h6"/>',
@@ -747,16 +885,51 @@ function renderPaths(selectedId = "") {
 function renderLessonVisual(guide) {
   return `<figure class="lesson-visual"><figcaption><span class="eyebrow">رسم توضيحي متحرك</span><strong>${escapeHtml(guide.visualTitle)}</strong></figcaption><ol class="lesson-flow" style="--flow-count:${guide.steps.length}" aria-label="${escapeHtml(guide.visualTitle)}">${guide.steps.map(([label, icon], index) => `<li class="lesson-flow-step" style="--step-index:${index}"><span class="lesson-step-icon" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false">${diagramIcons[icon] || diagramIcons.arrow}</svg></span><span>${escapeHtml(label)}</span></li>`).join("")}</ol><p class="lesson-visual-note">امشي مع الأسهم من أول خطوة لآخر خطوة؛ كل مرحلة بتشرح اللي بيحصل بعدها.</p></figure>`;
 }
+function renderLessonCoach(expansion) {
+  return `<aside class="lesson-coach" aria-label="توضيح رفيق التعلّم">
+    <div class="coach-avatar-wrap">
+      <svg class="coach-avatar" viewBox="0 0 110 130" aria-hidden="true" focusable="false">
+        <ellipse class="coach-shadow" cx="55" cy="122" rx="28" ry="5"/>
+        <g class="coach-person">
+          <path class="coach-shirt" d="M25 111c1-21 7-34 20-40h20c13 6 19 19 20 40z"/>
+          <path class="coach-collar" d="m43 72 12 13 12-13-6-4H49z"/>
+          <path class="coach-arm" d="M31 83 21 99l8 5 12-17"/>
+          <g class="coach-wave"><path class="coach-arm" d="m76 81 10-13 6 5-7 16"/><circle class="coach-skin" cx="90" cy="68" r="6"/></g>
+          <path class="coach-neck" d="M48 65h14v12H48z"/>
+          <circle class="coach-skin" cx="55" cy="43" r="25"/>
+          <path class="coach-hair" d="M30 43c0-20 11-30 26-30 16 0 25 12 24 30l-7-8-4-10c-9 8-20 11-36 11z"/>
+          <path class="coach-hair" d="M31 44c-3 11 0 17 4 21l3-14zM79 43c3 10 0 18-4 22l-3-15z"/>
+          <g class="coach-blink"><ellipse cx="46" cy="46" rx="2.3" ry="3"/><ellipse cx="64" cy="46" rx="2.3" ry="3"/></g>
+          <path class="coach-smile" d="M48 56q7 6 14 0"/>
+          <path class="coach-shirt-detail" d="M55 86v25m-8-23 8 7 8-7"/>
+        </g>
+      </svg>
+      <span class="coach-avatar-name">رفيق التعلّم</span>
+    </div>
+    <div class="coach-speech"><span class="eyebrow">ركز في النقطة دي</span><p>${escapeHtml(expansion.coreIdea)}</p><span class="coach-caption">افهم الفكرة، وبعدها قارنها بالمثال والتدريب.</span></div>
+  </aside>`;
+}
+function renderLessonBreakdown(expansion) {
+  return `<section class="lesson-breakdown" aria-label="تفاصيل الشرح">
+    <h4>نفهمها خطوة بخطوة</h4>
+    <div class="lesson-breakdown-grid">
+      <article><span>الفكرة الأساسية</span><p>${escapeHtml(expansion.coreIdea)}</p></article>
+      <article><span>مثال عملي</span><p>${escapeHtml(expansion.example)}</p></article>
+      <article><span>خد بالك</span><p>${escapeHtml(expansion.watchOut)}</p></article>
+    </div>
+  </section>`;
+}
 function lessonCard(path, lesson, index) {
   const id = `${path.id}-${index}`;
   const done = state.completed.includes(id);
   const expanded = openLesson === id;
   const scenario = lessonScenarios[id];
   const guide = lessonGuides[id];
+  const expansion = lessonExpansions[id];
   return `<article class="lesson-card ${done ? "completed" : ""} ${expanded ? "expanded" : ""}" id="lesson-${id}">
     <div class="path-top"><div><span class="eyebrow">الدرس رقم ${index + 1}</span><h3>${escapeHtml(lesson.title)} ${done ? '<span class="badge">خلص ✓</span>' : ""}</h3></div><button class="button small ghost" data-toggle-lesson="${id}" aria-expanded="${expanded}">${expanded ? "اقفل الدرس" : "افتح الدرس"}</button></div>
     <p>${escapeHtml(lesson.objective)}</p>
-    <div class="lesson-detail"><div class="lesson-copy"><p>${lesson.body}</p></div><section class="lesson-explainer"><h4>شرح أعمق</h4><p>${escapeHtml(guide.explanation)}</p></section>${renderLessonVisual(guide)}<section class="lesson-scenario"><div><span class="eyebrow">مهمة شغل (محاكاة)</span><p>${escapeHtml(scenario.situation)}</p></div><div><strong>خطوات التنفيذ</strong><p>${escapeHtml(scenario.response)}</p></div><div class="lesson-deliverable"><strong>مخرج الشغل المطلوب</strong><p>${escapeHtml(scenario.deliverable)}</p></div></section><div class="lesson-exercise"><strong>تطبيق عملي آمن</strong><p>${escapeHtml(lesson.exercise)}</p></div><div class="panel lesson-check"><strong>اختبر نفسك:</strong><p>${escapeHtml(lesson.question)}</p><div data-quiz="${id}">${lesson.options.map((option, optIndex) => `<button class="quiz-option" data-answer="${optIndex}" data-lesson="${id}">${escapeHtml(option)}</button>`).join("")}</div><div class="feedback" id="feedback-${id}" aria-live="polite"></div><button class="button small primary" data-complete="${id}" ${done ? "disabled" : ""}>${done ? "الدرس خلص ✓" : "علّم الدرس إنه خلص"}</button></div></div>
+    <div class="lesson-detail"><div class="lesson-copy"><p>${lesson.body}</p></div>${renderLessonCoach(expansion)}<section class="lesson-explainer"><h4>شرح أعمق</h4><p>${escapeHtml(guide.explanation)}</p></section>${renderLessonBreakdown(expansion)}${renderLessonVisual(guide)}<section class="lesson-scenario"><div><span class="eyebrow">مهمة شغل (محاكاة)</span><p>${escapeHtml(scenario.situation)}</p></div><div><strong>خطوات التنفيذ</strong><p>${escapeHtml(scenario.response)}</p></div><div class="lesson-deliverable"><strong>مخرج الشغل المطلوب</strong><p>${escapeHtml(scenario.deliverable)}</p></div></section><div class="lesson-exercise"><strong>تطبيق عملي آمن</strong><p>${escapeHtml(lesson.exercise)}</p></div><div class="panel lesson-check"><strong>اختبر نفسك:</strong><p>${escapeHtml(lesson.question)}</p><div data-quiz="${id}">${lesson.options.map((option, optIndex) => `<button class="quiz-option" data-answer="${optIndex}" data-lesson="${id}">${escapeHtml(option)}</button>`).join("")}</div><div class="feedback" id="feedback-${id}" aria-live="polite"></div><button class="button small primary" data-complete="${id}" ${done ? "disabled" : ""}>${done ? "الدرس خلص ✓" : "علّم الدرس إنه خلص"}</button></div></div>
   </article>`;
 }
 function renderTerminal() {

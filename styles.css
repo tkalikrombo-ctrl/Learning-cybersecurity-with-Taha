@@ -129,6 +129,32 @@ h3 { font-size: 1.08rem; margin-bottom: .35rem; }
 .lesson-explainer { margin: .9rem 0; padding: .9rem 1rem; border-inline-start: 3px solid var(--accent-2); border-radius: 10px 0 0 10px; background: color-mix(in srgb, var(--accent-2) 7%, var(--surface)); }
 .lesson-explainer h4 { margin: 0 0 .35rem; color: var(--accent-2); font-size: .95rem; }
 .lesson-explainer p { margin: 0; color: var(--text); line-height: 1.9; }
+.lesson-coach { display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: center; gap: .8rem; margin: .9rem 0; padding: .7rem .9rem; border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 15px; background: linear-gradient(110deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); }
+.coach-avatar-wrap { display: grid; justify-items: center; gap: .1rem; }
+.coach-avatar { width: 84px; height: 100px; overflow: visible; }
+.coach-avatar-name { color: var(--muted); font-size: .67rem; }
+.coach-person { transform-origin: 55px 120px; animation: coach-bob 2.8s ease-in-out infinite; }
+.coach-shadow { fill: color-mix(in srgb, var(--text) 12%, transparent); }
+.coach-shirt { fill: var(--accent-2); stroke: color-mix(in srgb, var(--accent-2) 75%, var(--text)); stroke-width: 1.3; }
+.coach-collar { fill: var(--surface); stroke: color-mix(in srgb, var(--accent-2) 70%, var(--text)); stroke-width: 1.2; }
+.coach-arm { fill: none; stroke: color-mix(in srgb, var(--accent-2) 78%, var(--text)); stroke-linecap: round; stroke-width: 7; }
+.coach-skin { fill: #f0bf98; stroke: #b77c60; stroke-width: 1; }
+.coach-neck { fill: #f0bf98; }
+.coach-hair { fill: #263746; }
+.coach-blink { transform-box: fill-box; transform-origin: center; animation: coach-blink 4.6s ease-in-out infinite; }
+.coach-smile { fill: none; stroke: #7e443f; stroke-linecap: round; stroke-width: 1.7; }
+.coach-shirt-detail { fill: none; stroke: color-mix(in srgb, var(--text) 80%, transparent); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+.coach-wave { transform-box: fill-box; transform-origin: 0% 100%; animation: coach-wave 3.8s ease-in-out infinite; }
+.coach-speech { position: relative; padding: .75rem .9rem; border: 1px solid var(--line); border-radius: 13px; background: var(--surface-2); }
+.coach-speech::before { position: absolute; top: 50%; left: 100%; width: 9px; height: 9px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); content: ""; background: var(--surface-2); transform: translate(-50%, -50%) rotate(45deg); }
+.coach-speech p { margin: .25rem 0; color: var(--text); line-height: 1.8; }
+.coach-caption { color: var(--muted); font-size: .73rem; }
+.lesson-breakdown { margin: 1rem 0; }
+.lesson-breakdown h4 { margin: 0 0 .6rem; color: var(--accent-2); font-size: .95rem; }
+.lesson-breakdown-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; }
+.lesson-breakdown-grid article { min-width: 0; padding: .8rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.lesson-breakdown-grid article > span { color: var(--accent); font-size: .75rem; font-weight: 700; }
+.lesson-breakdown-grid p { margin: .3rem 0 0; color: var(--text); font-size: .83rem; line-height: 1.8; }
 .lesson-visual { margin: 1rem 0; padding: 1rem; overflow: hidden; border: 1px solid var(--line); border-radius: 15px; background: radial-gradient(ellipse at 50% 0, color-mix(in srgb, var(--accent-2) 10%, transparent), transparent 65%), var(--surface); }
 .lesson-visual figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .7rem; }
 .lesson-visual figcaption strong { color: var(--text); }
@@ -299,6 +325,9 @@ h3 { font-size: 1.08rem; margin-bottom: .35rem; }
 @keyframes lesson-arrow-flow { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
 @keyframes lesson-icon-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 14%, transparent); } }
 @keyframes reveal-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes coach-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes coach-wave { 0%, 72%, 100% { transform: rotate(0); } 77%, 87% { transform: rotate(-14deg); } 82%, 92% { transform: rotate(8deg); } }
+@keyframes coach-blink { 0%, 44%, 48%, 100% { transform: scaleY(1); } 46% { transform: scaleY(.08); } }
 
 @media (max-width: 760px) {
   .attack-intro { grid-template-columns: 1fr; }
@@ -308,7 +337,9 @@ h3 { font-size: 1.08rem; margin-bottom: .35rem; }
   .attack-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .phase-detail { grid-template-columns: 1fr; }
   .response-grid, .aftercare-grid { grid-template-columns: 1fr; }
+  .lesson-breakdown-grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 480px) { .lesson-coach { grid-template-columns: 76px minmax(0, 1fr); gap: .5rem; padding: .6rem; } .coach-avatar { width: 68px; height: 86px; } .coach-speech { padding: .65rem; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

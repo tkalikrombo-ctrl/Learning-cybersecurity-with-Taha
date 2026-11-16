@@ -1,6 +1,6 @@
 const paths = [
   { id: "foundations", title: "أساسيات الكمبيوتر والإنترنت", icon: "◈", level: "١ · مبتدئ", description: "افهم جهازك ونظام التشغيل والويب قبل ما تبدأ التخصص.", lessons: [
-    { title: "الكمبيوتر ونظام التشغيل", objective: "تعرف دور المعالج والذاكرة والتخزين ونظام التشغيل.", body: "الكمبيوتر في جوهره جهاز بيستقبل إدخالات، يعالجها، ويخزن النتيجة أو يعرضها للمستخدم. المعالج هو «العقل» الذي ينفّذ التعليمات، والذاكرة RAM هي مساحة مؤقتة يستخدمها الجهاز أثناء التشغيل لتخزين البيانات والبرامج الحالية، بينما التخزين الثابت (SSD أو HDD) هو المكان اللي بتتدون فيه الملفات ببطء أكبر لكنه يبقى دائمًا، حتى لو قفلت الجهاز. نظام التشغيل هو الطبقة اللي تنظم كل ده: يوزع الوقت بين التطبيقات، يدار المهام، يتحكم في الوصول إلى الملفات، وينشئ واجهة الاستخدام. في الواقع المهني، فهم نظام التشغيل مهم لأنه يساعدك تفهم لماذا بعض البرامج تحتاج صلاحيات، وسبب بطء الجهاز، وسبب ظهور تنبيه في أمان النظام. لا تخلط بين ما هو «مؤقت» وما هو «مؤقت + دائم» في نظامك، لأن كل واحد له أثر مختلف على الأداء والنسخ الاحتياطي والأمن.", exercise: "افتح إعدادات جهازك وشوف اسم نظام التشغيل، سعة التخزين المتاحة، وكم عدد التطبيقات المفتوحة تقريبًا؛ ما تغيّرش أي إعداد في هذه الخطوة.", question: "إيه الفرق الأساسي بين RAM والتخزين؟", options: ["RAM مساحة مؤقتة أثناء التشغيل، والتخزين يحتفظ بالملفات", "RAM هي الإنترنت والتخزين هو الشاشة", "مفيش أي فرق بينهم"], answer: 0, explanation: "الذاكرة المؤقتة بتفضى غالبًا لما الجهاز يقفل، لكن ملفات التخزين بتفضل موجودة، وده مهم جدًا عند تحليل بطء الجهاز أو فحص الذاكرة في الحوادث." },
+    { title: "الكمبيوتر ونظام التشغيل", objective: "تعرف دور المعالج والذاكرة والتخزين ونظام التشغيل.", body: "الكمبيوتر بيستقبل بيانات، ينفّذ عليها تعليمات، وبعدها يعرض النتيجة أو يحفظها. المعالج (CPU) بينفّذ تعليمات البرامج؛ بنشبّهه بالعقل للتبسيط، لكنه جزء إلكتروني مش عقل حقيقي. ذاكرة RAM مساحة شغل سريعة ومؤقتة: بتحتفظ بالبيانات اللي البرامج محتاجاها دلوقتي، ومحتواها بيروح غالبًا لما الجهاز يتقفل. أما SSD أو HDD فده تخزين طويل الأمد للملفات، وبيفضل محتفظ بيها بعد إغلاق الجهاز طالما القرص سليم والملفات ما اتمسحتش. نظام التشغيل، زي Windows أو Linux، بينظم استخدام البرامج للمعالج والذاكرة والتخزين، وبيتحكم في حسابات المستخدمين وصلاحياتهم. في الشغل، فهم الفرق بينهم بيساعدك تفسر بطء الجهاز، تختار المكان الصح لحفظ ملف، وتفهم ليه برنامج بيطلب صلاحية. لو ظهرت رسالة صلاحيات، ما توافقش عليها تلقائيًا: اسأل هل التغيير مطلوب ومصرّح بيه.", exercise: "افتح إعدادات جهازك وشوف اسم نظام التشغيل، سعة التخزين المتاحة، وكم عدد التطبيقات المفتوحة تقريبًا؛ ما تغيّرش أي إعداد في هذه الخطوة.", question: "إيه الفرق الأساسي بين RAM والتخزين؟", options: ["RAM مساحة مؤقتة أثناء التشغيل، والتخزين يحتفظ بالملفات", "RAM هي الإنترنت والتخزين هو الشاشة", "مفيش أي فرق بينهم"], answer: 0, explanation: "الذاكرة المؤقتة بتفضى غالبًا لما الجهاز يقفل، لكن ملفات التخزين بتفضل موجودة، وده مهم جدًا عند تحليل بطء الجهاز أو فحص الذاكرة في الحوادث." },
     { title: "الملفات والحسابات والبرامج", objective: "رتّب بياناتك وافهم ليه لكل مستخدم حساب وصلاحيات.", body: "الملف هو وحدة المعلومات: صورة، نص، جدول، تقرير، أو صورة احتياطية. المجلد أو الدليل هو حاوية مرتبة لتنظيم الملفات حسب النوع أو المشروع أو الشغل. في بيئة العمل، الملف لا يكون مهم فقط في محتواه لكنه مهم في مكانه، ملكيته، وسلامته. كل مستخدم غالبًا عنده حساب ويومه المعياري يكون له صلاحيات محدودة، وده أصل مهم في الأمان: لو كل شخص عنده صلاحيات واسعة جدًا، أي خطأ أو برنامج ضار قد يغير بيانات أكثر من اللازم. البرامج نفسها تحتاج صلاحيات معينة لتشغيلها، وعلينا أن نستخدم الحساب الأقل صلاحية الذي يفي بالمهمة بدل أن نستخدم حساب المدير في كل مرة. وسيلة رائعة للتعلّم هي تقسيم الملفات إلى مجلدات واضحة مثل: docs، projects، backups، screenshots، logs، ويفضل الاحتفاظ بنسخة احتياطية للملفات المهمة قبل أي تغيير كبير. ده يطابق الممارسة الواقعية في فرق الدعم والأمن: التنظيم الجيد يقلل الخطر ويحسن التتبع.", exercise: "اعمل مجلد تدريب باسم واضح، مثل shared-lab أو training-files، ثم ضع فيه ملف نصي بسيط يحتوي على ملاحظتين فقط دون أي بيانات شخصية أو حسابات حقيقية.", question: "ليه بنستخدم حسابًا عاديًا في الشغل اليومي؟", options: ["لتقليل أثر الغلط أو البرنامج الضار", "عشان يخلي الجهاز أسرع دايمًا", "عشان يلغي الحاجة لكلمة سر"], answer: 0, explanation: "الصلاحيات الأقل بتقلل التغييرات اللي يقدر برنامج أو مستخدم يعملها بالغلط، وده مبدأ أساسي في الأمان وتخفيف الأثر عند وقوع حادث." },
     { title: "الإنترنت والويب", objective: "فرّق بين الإنترنت والويب والمتصفح والخادم.", body: "الإنترنت هو شبكة كبيرة تربط الأجهزة حول العالم؛ أما الويب فهو أحد الخدمات التي تعمل فوق الإنترنت، ويتيح لك الوصول إلى مواقع، صفحات، تطبيقات، وسجلات. عندما تكتب عنوان URL في المتصفح، يقوم المتصفح بإرسال طلب إلى خادم الإنترنت، والخادم يرد بالصفحة أو البيانات المطلوبة. الخادم ليس نفس المتصفح، ولا هو نفس الشبكة؛ كل منهم له دور واضح. في شريط العنوان تلاحظ اسم النطاق (مثل example.com)، والمسار (الصفحة المحددة)، وربما الواجهة أو المعلمات. وجود القفل إلى جانب HTTPS يعني أن الاتصال بينك وبين الخادم مشفر، لكنه لا يضمن أن الموقع هو الحقيقي أصلاً؛ لذلك لا تعتمد على HTTPS لوحده، وراجع اسم النطاق، وتأكد أنك على الموقع الرسمي. هذا هو الأساس الذي بعدها نستخدمه في شرح التصيد، DNS، والتأمين. الفهم الصحيح للويب يعني قدرتك تفرق بين «الاتصال آمن» و«الموقع موثوق»—وهما شيئين مختلفين.", exercise: "افتح موقعًّا تعرفه جيدًا، راجع اسم النطاق، وراقب هل عنوانه يبدأ بـ HTTPS، لكن لا تدخل بيانات أو تضغط على أي رابط غير متوقع في هذه الخطوة.", question: "إيه الوصف الأدق للمتصفح؟", options: ["برنامج يطلب صفحات الويب ويعرضها", "هو نفس شبكة الإنترنت", "برنامج بيحفظ كل المواقع على جهازك"], answer: 0, explanation: "المتصفح هو الواجهة اللي بتستخدمها للتواصل مع خدمات الويب، أما الإنترنت فهي الشبكة الأساسية، والخادم هو الجهة التي تقدم الخدمات والبيانات." }
   ]},
@@ -185,8 +185,8 @@ const lessonScenarios = {
 const lessonGuides = {
   "foundations-0": {
     explanation: "تخيّل الكمبيوتر فريق شغل صغير: المعالج ينفذ التعليمات، وRAM تحتفظ مؤقتًا باللي البرامج محتاجاه حالًا، والتخزين يحفظ الملفات على المدى الطويل. نظام التشغيل بينظم استخدامهم وبيفصل بين البرامج والحسابات؛ لما تقفل الجهاز محتوى RAM بيروح، لكن ملفات التخزين بتفضل.",
-    visualTitle: "من مكونات الجهاز لنتيجة البرنامج",
-    steps: [["أجهزة ومدخلات", "computer"], ["نظام التشغيل", "chip"], ["برنامج ونتيجة", "screen"]]
+    visualTitle: "أجزاء الكمبيوتر اللي لازم تتعرف عليها",
+    steps: [["المعالج CPU", "chip"], ["ذاكرة RAM", "memory"], ["تخزين SSD أو HDD", "drive"], ["نظام التشغيل", "screen"]]
   },
   "foundations-1": {
     explanation: "الحساب بيحدد هوية المستخدم، والصلاحيات بتحدد العمليات اللي يقدر يعملها على كل ملف وبرنامج. قراءة الملف غير تعديله أو تشغيله؛ عشان كده بنستخدم حسابًا عاديًا للشغل اليومي، ونحتفظ بنسخ احتياطية للملفات المهمة في مكان موثوق.",
@@ -461,6 +461,8 @@ const lessonExpansions = {
 const diagramIcons = {
   computer: '<rect x="7" y="9" width="26" height="19" rx="3"/><path d="M15 34h10M20 28v6"/>',
   chip: '<rect x="11" y="11" width="18" height="18" rx="3"/><path d="M16 16h8v8h-8zM20 5v6M20 29v6M5 20h6M29 20h6"/>',
+  memory: '<rect x="4" y="14" width="32" height="13" rx="2"/><path d="M9 18h4v5H9zm8 0h4v5h-4zm8 0h4v5h-4zM10 27v5m7-5v5m7-5v5m7-5v5"/>',
+  drive: '<rect x="6" y="8" width="28" height="25" rx="4"/><circle cx="20" cy="21" r="7"/><circle cx="20" cy="21" r="2"/><path d="M10 13h5m12 14h3"/>',
   screen: '<rect x="6" y="8" width="28" height="21" rx="3"/><path d="M15 34h10M20 29v5"/>',
   user: '<circle cx="20" cy="14" r="6"/><path d="M8 34c1-8 5-12 12-12s11 4 12 12z"/>',
   key: '<circle cx="14" cy="20" r="7"/><path d="M21 20h14m-5 0v5m-5-5v4"/>',
@@ -708,6 +710,8 @@ let toastTimer;
 let flashIndex = 0;
 let flashRevealed = false;
 let activeAttackPhase = 0;
+let activeNarrationId = "";
+let speechRunToken = 0;
 
 const attackPhases = [
   { title: "باب مفتوح أو خدعة", description: "ممكن البداية تبقى كلمة سر ضعيفة أو متكررة، رسالة تصيّد، برنامج قديم، أو إعداد غلط. دي أمثلة على أسباب شائعة، مش خطوات تنفيذ.", defense: "اقفل الباب: كلمة سر فريدة، تحديثات، تحقق من الروابط، ومصادقة متعددة العوامل." },
@@ -779,7 +783,140 @@ function notify(message) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
 }
+function setLessonAudioStatus(id, message) {
+  const status = document.getElementById(`audio-status-${id}`);
+  if (status) status.textContent = message;
+}
+function findArabicVoice(availableVoices = window.speechSynthesis.getVoices()) {
+  const voices = availableVoices.filter(voice => voice.localService === true);
+  const egyptianVoice = voices.find(voice => /^ar[-_]EG(?:$|[-_])/i.test(voice.lang) || /egypt|egyptian|مصر/i.test(voice.name));
+  if (egyptianVoice) return { voice: egyptianVoice, isEgyptian: true };
+  const arabicVoice = voices.find(voice => /^ar(?:[-_]|$)/i.test(voice.lang));
+  return arabicVoice ? { voice: arabicVoice, isEgyptian: false } : null;
+}
+function waitForSpeechVoices(timeoutMs = 3000) {
+  const synth = window.speechSynthesis;
+  return new Promise(resolve => {
+    let settled = false;
+    let timeoutId;
+    let pollId;
+    const finish = (allowEmpty = false) => {
+      if (settled) return;
+      const voices = synth.getVoices();
+      if (!allowEmpty && voices.length === 0) return;
+      settled = true;
+      clearTimeout(timeoutId);
+      clearInterval(pollId);
+      synth.removeEventListener("voiceschanged", checkVoices);
+      resolve(voices);
+    };
+    const checkVoices = () => finish();
+    synth.addEventListener("voiceschanged", checkVoices);
+    timeoutId = setTimeout(() => finish(true), timeoutMs);
+    pollId = setInterval(checkVoices, 100);
+    finish();
+  });
+}
+function lessonNarrationText(id) {
+  const lesson = allLessons().find(item => item.id === id);
+  const guide = lessonGuides[id];
+  const expansion = lessonExpansions[id];
+  const scenario = lessonScenarios[id];
+  if (!lesson || !guide || !expansion || !scenario) return "";
+  const textFromMarkup = value => {
+    const template = document.createElement("template");
+    template.innerHTML = value;
+    return template.content.textContent.replace(/\s+/g, " ").trim();
+  };
+  return [
+    `الدرس: ${lesson.title}.`,
+    `هدف الدرس: ${lesson.objective}.`,
+    textFromMarkup(lesson.body),
+    `شرح أعمق: ${guide.explanation}.`,
+    `الفكرة الأساسية: ${expansion.coreIdea}.`,
+    `مثال عملي: ${expansion.example}.`,
+    `خد بالك: ${expansion.watchOut}.`,
+    `موقف شغل محاكاة: ${scenario.situation}.`,
+    `خطوات آمنة: ${scenario.response}.`,
+    `مخرج الشغل: ${scenario.deliverable}.`,
+    `تطبيق عملي آمن: ${lesson.exercise}.`
+  ].filter(Boolean).join(" ");
+}
+function splitNarration(text, maxLength = 180) {
+  const chunks = [];
+  let chunk = "";
+  for (const word of text.split(/\s+/)) {
+    const next = chunk ? `${chunk} ${word}` : word;
+    if (next.length > maxLength && chunk) {
+      chunks.push(chunk);
+      chunk = word;
+    } else {
+      chunk = next;
+    }
+  }
+  if (chunk) chunks.push(chunk);
+  return chunks;
+}
+function speakNarrationChunk(id, chunks, index, voiceInfo, token) {
+  if (token !== speechRunToken) return;
+  if (index >= chunks.length) {
+    activeNarrationId = "";
+    setLessonAudioStatus(id, "خلص شرح الدرس. تقدر تسمعه تاني أو تكمل التدريب.");
+    return;
+  }
+  const utterance = new SpeechSynthesisUtterance(chunks[index]);
+  utterance.voice = voiceInfo.voice;
+  utterance.lang = voiceInfo.isEgyptian ? "ar-EG" : voiceInfo.voice.lang;
+  utterance.rate = 0.9;
+  utterance.pitch = 1.02;
+  utterance.onend = () => speakNarrationChunk(id, chunks, index + 1, voiceInfo, token);
+  utterance.onerror = event => {
+    if (token !== speechRunToken || event.error === "canceled" || event.error === "interrupted") return;
+    window.speechSynthesis.cancel();
+    activeNarrationId = "";
+    setLessonAudioStatus(id, "تعذر تشغيل الصوت. راجع إعدادات الصوت في المتصفح وحاول تاني.");
+  };
+  window.speechSynthesis.speak(utterance);
+}
+async function speakLesson(id) {
+  if (!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
+    setLessonAudioStatus(id, "القراءة الصوتية مش مدعومة في المتصفح ده.");
+    return;
+  }
+  const text = lessonNarrationText(id);
+  if (!text) {
+    setLessonAudioStatus(id, "تعذر تجهيز نص الدرس للاستماع. حدّث الصفحة وحاول تاني.");
+    return;
+  }
+  const token = ++speechRunToken;
+  window.speechSynthesis.cancel();
+  activeNarrationId = id;
+  setLessonAudioStatus(id, "بنجهّز الصوت العربي المحلي...");
+  const voices = await waitForSpeechVoices();
+  if (token !== speechRunToken || activeNarrationId !== id) return;
+  const voiceInfo = findArabicVoice(voices);
+  if (!voiceInfo) {
+    activeNarrationId = "";
+    setLessonAudioStatus(id, "مش لاقيين صوت عربي محلي مثبت على الجهاز. فعّل صوت Arabic (Egypt) أو صوت عربي محلي من إعدادات النظام والمتصفح، وبعدها جرّب تاني.");
+    return;
+  }
+  setLessonAudioStatus(id, voiceInfo.isEgyptian
+    ? "جاري قراءة الشرح بصوت عربي (مصر) محلي متاح على جهازك..."
+    : "جاري القراءة بأقرب صوت عربي محلي؛ الصوت المصري مش مثبت على جهازك...");
+  speakNarrationChunk(id, splitNarration(text), 0, voiceInfo, token);
+}
+function stopLessonSpeech(id) {
+  if (activeNarrationId !== id) return;
+  speechRunToken += 1;
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  activeNarrationId = "";
+  setLessonAudioStatus(id, "تم إيقاف قراءة الشرح.");
+}
+function stopActiveLessonSpeech() {
+  if (activeNarrationId) stopLessonSpeech(activeNarrationId);
+}
 function render() {
+  stopActiveLessonSpeech();
   document.documentElement.dataset.theme = state.theme;
   const app = document.getElementById("app");
   const view = {
@@ -795,11 +932,21 @@ function render() {
   document.querySelectorAll(".nav-link").forEach(button => button.classList.toggle("active", button.dataset.view === activeView));
   bindViewEvents();
 }
+function renderEthicsPledge(compact = false) {
+  return `<section class="ethics-primer ${compact ? "compact" : ""}" aria-labelledby="ethics-title">
+    <div class="ethics-primer-icon" aria-hidden="true">🛡</div>
+    <div><span class="eyebrow">${compact ? "قاعدة ثابتة في كل درس" : "الخطوة صفر · الأمان والأخلاق قبل الأدوات"}</span><h2 id="ethics-title">اتعلّم عشان تحمي، وما تضرّش حد</h2>
+      <p>المحتوى ده للتعليم والتوعية الدفاعية فقط، ومش إذن لاختبار أي جهاز أو حساب أو شبكة. منشئ المحتوى لا يوافق على الاستخدام المخالف ولا يشجّعه، وكل شخص مسؤول عن أفعاله. مخالفة القانون ممكن تعرّضك للمساءلة وعقوبات قد تصل للحبس حسب قانون بلدك.</p>
+      <p class="ethics-guidance"><strong>اعمل الخير وخد بالأسباب:</strong> استأذن كتابةً، التزم بالنطاق، ما تغيّرش أو تمسح دليل، وبلّغ القنوات الرسمية. التدريب هنا محاكاة محلية ببيانات مصطنعة فقط.</p>
+    </div>
+  </section>`;
+}
 function renderHome() {
   const suggestions = allLessons().filter(item => !state.completed.includes(item.id)).slice(0, 3);
   const next = suggestions[0];
   const pct = Math.round(completedCount() / totalLessons() * 100);
   return `
+    ${renderEthicsPledge()}
     <section class="hero">
       <div class="hero-copy">
         <span class="eyebrow">منهج هندسي من الصفر · ٨ مراحل مترتبة</span>
@@ -815,7 +962,6 @@ function renderHome() {
       <div class="stat-card"><strong>${state.labs.length}</strong><span>مختبر مكتمل</span></div>
       <div class="stat-card"><strong>${earnedAchievements().filter(badge => badge.earned).length}</strong><span>إنجاز محقق</span></div>
     </div>
-    <section class="notice" aria-label="تنبيه الاستخدام الآمن"><span aria-hidden="true">⚠</span><p><strong>خليك قانوني وآمن:</strong> الحالات مستوحاة من ممارسات العمل الواقعية، لكن البيانات داخل الموقع تدريبية محلية فقط. ممنوع تختبر جهاز أو شبكة مش بتاعتك من غير إذن صريح.</p></section>
     <section class="attack-intro">
       <div><span class="eyebrow">افهم عشان تحمي نفسك</span><h2>الهجوم بيحصل إزاي؟</h2><p>شرح بصري مبسّط للمراحل الشائعة، من غير خطوات تنفيذية أو استهداف لأنظمة حقيقية.</p></div>
       <div class="mini-attack-flow" aria-label="رسم متحرك: نقطة ضعف، محاولة وصول، نشاط غير معتاد، اكتشاف واحتواء">
@@ -875,15 +1021,21 @@ function pathCard(path) {
   return `<article class="card path-card"><div class="path-top"><span class="path-icon" aria-hidden="true">${path.icon}</span><span class="badge">${path.level}</span></div><h3 style="margin-top:.8rem">${escapeHtml(path.title)}</h3><p>${escapeHtml(path.description)}</p><div class="progress-track" role="progressbar" aria-label="تقدمك في ${escapeHtml(path.title)}" aria-valuenow="${progress.pct}" aria-valuemin="0" aria-valuemax="100"><span style="width:${progress.pct}%"></span></div><div class="path-meta"><span>${progress.done} من ${progress.total} دروس</span><span>${progress.pct}%</span></div><div class="path-footer"><span class="muted">${path.lessons.length} دروس خفيفة</span><button class="button small ghost" data-open-path="${path.id}">افتح المسار ←</button></div></article>`;
 }
 function renderPaths(selectedId = "") {
-  if (!selectedId) return `<div class="eyebrow">منهج مرتب من الأساسيات للمشاريع</div><h1>خريطة التعلّم</h1><p class="subheading">امشي في المراحل بالترتيب عشان كل موضوع يبني على اللي قبله. كل درس فيه شرح واقعي، حالة حقيقية في بيئة العمل، خطوة دفاعية، وتمرين عملي، وتقدمك بيتحفظ على جهازك.</p><section class="curriculum-overview"><div><strong>٨ مراحل</strong><span>من الأساسيات للمشروع</span></div><div><strong>${totalLessons()} درس</strong><span>شرح وتطبيق ومراجعة</span></div><div><strong>تدريب آمن</strong><span>حالات واقعية بلا اتصال حقيقي</span></div></section><div class="grid paths-grid">${paths.map(pathCard).join("")}</div><section style="margin-top:2rem"><div class="section-head"><div><span class="eyebrow">تقدمك خطوة بخطوة</span><h2>المراحل بالترتيب</h2></div></div>${renderRoadmap()}</section>`;
+  if (!selectedId) return `<div class="eyebrow">منهج مرتب من الأساسيات للمشاريع</div><h1>خريطة التعلّم</h1><p class="subheading">امشي في المراحل بالترتيب عشان كل موضوع يبني على اللي قبله. كل درس فيه شرح واقعي، حالة محاكاة من بيئة العمل، خطوة دفاعية، وتمرين عملي، وتقدمك بيتحفظ على جهازك.</p>${renderEthicsPledge(true)}<section class="curriculum-overview"><div><strong>٨ مراحل</strong><span>من الأساسيات للمشروع</span></div><div><strong>${totalLessons()} درس</strong><span>شرح وتطبيق ومراجعة</span></div><div><strong>تدريب آمن</strong><span>حالات واقعية بلا اتصال حقيقي</span></div></section><div class="grid paths-grid">${paths.map(pathCard).join("")}</div><section style="margin-top:2rem"><div class="section-head"><div><span class="eyebrow">تقدمك خطوة بخطوة</span><h2>المراحل بالترتيب</h2></div></div>${renderRoadmap()}</section>`;
   const path = paths.find(item => item.id === selectedId);
   if (!path) return renderPaths();
   const progress = pathProgress(path);
-  return `<button class="button small ghost" data-view="paths">← ارجع للمسارات</button><div class="section-head"><div><span class="eyebrow">المستوى: ${path.level} · ${path.lessons.length} دروس</span><h1>${path.icon} ${escapeHtml(path.title)}</h1><p class="muted">${escapeHtml(path.description)}</p></div><div class="badge">${progress.done}/${progress.total} خلصوا</div></div><section class="notice course-reality-note"><span aria-hidden="true">ⓘ</span><p><strong>محاكاة شغل حقيقي، مش بيئة حقيقية:</strong> هتتدرّب على خطوات ومخرجات شغل زي التذاكر والتقارير، لكن كل الأمثلة والبيانات مصطنعة. مفيش اتصال أو تغيير على أنظمة فعلية.</p></section>
+  return `<button class="button small ghost" data-view="paths">← ارجع للمسارات</button><div class="section-head"><div><span class="eyebrow">المستوى: ${path.level} · ${path.lessons.length} دروس</span><h1>${path.icon} ${escapeHtml(path.title)}</h1><p class="muted">${escapeHtml(path.description)}</p></div><div class="badge">${progress.done}/${progress.total} خلصوا</div></div>${renderEthicsPledge(true)}<section class="notice course-reality-note"><span aria-hidden="true">ⓘ</span><p><strong>محاكاة شغل حقيقي، مش بيئة حقيقية:</strong> هتتدرّب على خطوات ومخرجات شغل زي التذاكر والتقارير، لكن كل الأمثلة والبيانات مصطنعة. مفيش اتصال أو تغيير على أنظمة فعلية.</p></section>
     ${path.id === "linux" ? `<div class="content-layout"><div class="lesson-list">${path.lessons.map((lesson, index) => lessonCard(path, lesson, index)).join("")}</div>${renderTerminal()}</div>` : `<div class="lesson-list">${path.lessons.map((lesson, index) => lessonCard(path, lesson, index)).join("")}</div>`}`;
 }
 function renderLessonVisual(guide) {
-  return `<figure class="lesson-visual"><figcaption><span class="eyebrow">رسم توضيحي متحرك</span><strong>${escapeHtml(guide.visualTitle)}</strong></figcaption><ol class="lesson-flow" style="--flow-count:${guide.steps.length}" aria-label="${escapeHtml(guide.visualTitle)}">${guide.steps.map(([label, icon], index) => `<li class="lesson-flow-step" style="--step-index:${index}"><span class="lesson-step-icon" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false">${diagramIcons[icon] || diagramIcons.arrow}</svg></span><span>${escapeHtml(label)}</span></li>`).join("")}</ol><p class="lesson-visual-note">امشي مع الأسهم من أول خطوة لآخر خطوة؛ كل مرحلة بتشرح اللي بيحصل بعدها.</p></figure>`;
+  return `<figure class="lesson-visual"><figcaption><span class="eyebrow">صور توضيحية للمفاهيم</span><strong>${escapeHtml(guide.visualTitle)}</strong></figcaption><div class="lesson-object-gallery" role="list" aria-label="رسوم تعليمية لعناصر الدرس">${guide.steps.map(([label, icon], index) => `<figure class="lesson-object-card" role="listitem" style="--step-index:${index}"><span class="lesson-object-number">${index + 1}</span><div class="lesson-object-art"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">${diagramIcons[icon] || diagramIcons.arrow}</svg></div><figcaption>${escapeHtml(label)}</figcaption></figure>`).join("")}</div><ol class="lesson-flow" style="--flow-count:${guide.steps.length}" aria-label="${escapeHtml(guide.visualTitle)}">${guide.steps.map(([label, icon], index) => `<li class="lesson-flow-step" style="--step-index:${index}"><span class="lesson-step-icon" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false">${diagramIcons[icon] || diagramIcons.arrow}</svg></span><span>${escapeHtml(label)}</span></li>`).join("")}</ol><p class="lesson-visual-note">الرسوم رمزية للتعرّف على الشكل العام والفكرة؛ مش صور فوتوغرافية ولا تعليمات لتطبيقها على نظام حقيقي.</p></figure>`;
+}
+function renderLessonAudio(id) {
+  return `<section class="lesson-audio" aria-label="الاستماع للشرح">
+    <div class="lesson-audio-actions"><button class="button small primary" type="button" data-speak-lesson="${id}"><span aria-hidden="true">🔊</span> اسمع الشرح</button><button class="button small ghost" type="button" data-stop-lesson="${id}">إيقاف الصوت</button></div>
+    <p class="lesson-audio-status" id="audio-status-${id}" role="status" aria-live="polite">الصوت بيتولّد محليًا؛ هنفضّل صوت عربي مصري محلي مثبت على جهازك، وإلا هنستخدم أقرب صوت عربي محلي متاح.</p>
+  </section>`;
 }
 function renderLessonCoach(expansion) {
   return `<aside class="lesson-coach" aria-label="توضيح رفيق التعلّم">
@@ -929,7 +1081,7 @@ function lessonCard(path, lesson, index) {
   return `<article class="lesson-card ${done ? "completed" : ""} ${expanded ? "expanded" : ""}" id="lesson-${id}">
     <div class="path-top"><div><span class="eyebrow">الدرس رقم ${index + 1}</span><h3>${escapeHtml(lesson.title)} ${done ? '<span class="badge">خلص ✓</span>' : ""}</h3></div><button class="button small ghost" data-toggle-lesson="${id}" aria-expanded="${expanded}">${expanded ? "اقفل الدرس" : "افتح الدرس"}</button></div>
     <p>${escapeHtml(lesson.objective)}</p>
-    <div class="lesson-detail"><div class="lesson-copy"><p>${lesson.body}</p></div>${renderLessonCoach(expansion)}<section class="lesson-explainer"><h4>شرح أعمق</h4><p>${escapeHtml(guide.explanation)}</p></section>${renderLessonBreakdown(expansion)}${renderLessonVisual(guide)}<section class="lesson-scenario"><div><span class="eyebrow">مهمة شغل (محاكاة)</span><p>${escapeHtml(scenario.situation)}</p></div><div><strong>خطوات التنفيذ</strong><p>${escapeHtml(scenario.response)}</p></div><div class="lesson-deliverable"><strong>مخرج الشغل المطلوب</strong><p>${escapeHtml(scenario.deliverable)}</p></div></section><div class="lesson-exercise"><strong>تطبيق عملي آمن</strong><p>${escapeHtml(lesson.exercise)}</p></div><div class="panel lesson-check"><strong>اختبر نفسك:</strong><p>${escapeHtml(lesson.question)}</p><div data-quiz="${id}">${lesson.options.map((option, optIndex) => `<button class="quiz-option" data-answer="${optIndex}" data-lesson="${id}">${escapeHtml(option)}</button>`).join("")}</div><div class="feedback" id="feedback-${id}" aria-live="polite"></div><button class="button small primary" data-complete="${id}" ${done ? "disabled" : ""}>${done ? "الدرس خلص ✓" : "علّم الدرس إنه خلص"}</button></div></div>
+    <div class="lesson-detail">${renderLessonAudio(id)}<div class="lesson-copy"><p>${lesson.body}</p></div>${renderLessonCoach(expansion)}<section class="lesson-explainer"><h4>شرح أعمق</h4><p>${escapeHtml(guide.explanation)}</p></section>${renderLessonBreakdown(expansion)}${renderLessonVisual(guide)}<section class="lesson-scenario"><div><span class="eyebrow">مهمة شغل (محاكاة)</span><p>${escapeHtml(scenario.situation)}</p></div><div><strong>خطوات التنفيذ</strong><p>${escapeHtml(scenario.response)}</p></div><div class="lesson-deliverable"><strong>مخرج الشغل المطلوب</strong><p>${escapeHtml(scenario.deliverable)}</p></div></section><div class="lesson-exercise"><strong>تطبيق عملي آمن</strong><p>${escapeHtml(lesson.exercise)}</p></div><div class="panel lesson-check"><strong>اختبر نفسك:</strong><p>${escapeHtml(lesson.question)}</p><div data-quiz="${id}">${lesson.options.map((option, optIndex) => `<button class="quiz-option" data-answer="${optIndex}" data-lesson="${id}">${escapeHtml(option)}</button>`).join("")}</div><div class="feedback" id="feedback-${id}" aria-live="polite"></div><button class="button small primary" data-complete="${id}" ${done ? "disabled" : ""}>${done ? "الدرس خلص ✓" : "علّم الدرس إنه خلص"}</button></div></div>
   </article>`;
 }
 function renderTerminal() {
@@ -1048,6 +1200,8 @@ function renderAchievements() {
   return `<div class="eyebrow">كل خطوة تستحق التقدير</div><h1>إنجازاتك</h1><p class="subheading">تُمنح الشارات تلقائيًا عند إكمال الأنشطة. استمر بالتعلّم وفق وتيرتك.</p><div class="stats-grid"><div class="stat-card"><strong>${completedCount()}</strong><span>درس مكتمل</span></div><div class="stat-card"><strong>${state.labs.length}</strong><span>مختبر مكتمل</span></div><div class="stat-card"><strong>${badges.filter(b => b.earned).length}</strong><span>شارات محققة</span></div><div class="stat-card"><strong>${Math.round(completedCount() / totalLessons() * 100)}%</strong><span>تقدم المسارات</span></div></div><div class="achievement-grid">${badges.map(b => `<article class="achievement ${b.earned ? "earned" : ""}"><span class="achievement-icon">${b.icon}</span><h3>${b.title} ${b.earned ? "✓" : ""}</h3><p class="muted">${b.description}</p><span class="tag">${b.earned ? "تم الإنجاز" : "لم تُفتح بعد"}</span></article>`).join("")}</div><div class="panel" style="margin-top:1.2rem"><h2>نتائج الاختبارات</h2>${Object.keys(state.scores).length ? `<ul>${Object.entries(state.scores).map(([id, score]) => `<li>${escapeHtml(allLessons().find(item => item.id === id)?.title || id)}: ${score ? "إجابة صحيحة ✓" : "أعد المحاولة"}</li>`).join("")}</ul>` : `<p class="muted">لم تُسجل إجابات بعد. افتح درسًا وجرّب الاختبار القصير.</p>`}</div>`;
 }
 function bindViewEvents() {
+  document.querySelectorAll("[data-speak-lesson]").forEach(button => button.addEventListener("click", () => speakLesson(button.dataset.speakLesson)));
+  document.querySelectorAll("[data-stop-lesson]").forEach(button => button.addEventListener("click", () => stopLessonSpeech(button.dataset.stopLesson)));
   document.getElementById("app").querySelectorAll("[data-view]").forEach(button => button.addEventListener("click", () => { activeView = button.dataset.view; activePath = ""; openLesson = ""; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }));
   document.querySelectorAll("[data-open-path]").forEach(button => button.addEventListener("click", () => {
     activeView = "paths";
@@ -1181,6 +1335,7 @@ function bindViewEvents() {
   }
 }
 function renderPathsIntoApp(pathId) {
+  stopActiveLessonSpeech();
   activePath = pathId;
   document.getElementById("app").innerHTML = renderPaths(pathId);
   document.querySelectorAll(".nav-link").forEach(button => button.classList.toggle("active", button.dataset.view === "paths"));

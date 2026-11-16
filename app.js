@@ -908,16 +908,51 @@ function renderPaths(selectedId = "") {
 function renderLessonVisual(guide) {
   return `<figure class="lesson-visual"><figcaption><span class="eyebrow">صور توضيحية للمفاهيم</span><strong>${escapeHtml(guide.visualTitle)}</strong></figcaption><div class="lesson-object-gallery" role="list" aria-label="رسوم تعليمية لعناصر الدرس">${guide.steps.map(([label, icon], index) => `<figure class="lesson-object-card" role="listitem" style="--step-index:${index}"><span class="lesson-object-number">${index + 1}</span><div class="lesson-object-art"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">${diagramIcons[icon] || diagramIcons.arrow}</svg></div><figcaption>${escapeHtml(label)}</figcaption></figure>`).join("")}</div><ol class="lesson-flow" style="--flow-count:${guide.steps.length}" aria-label="${escapeHtml(guide.visualTitle)}">${guide.steps.map(([label, icon], index) => `<li class="lesson-flow-step" style="--step-index:${index}"><span class="lesson-step-icon" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false">${diagramIcons[icon] || diagramIcons.arrow}</svg></span><span>${escapeHtml(label)}</span></li>`).join("")}</ol><p class="lesson-visual-note">الرسوم رمزية للتعرّف على الشكل العام والفكرة؛ مش صور فوتوغرافية ولا تعليمات لتطبيقها على نظام حقيقي.</p></figure>`;
 }
+function renderLessonPartAudioButton(id, part, label) {
+  return `<button class="lesson-part-audio" type="button" data-audio-lesson="${id}" data-audio-part="${part}" aria-label="اسمع شرح ${escapeHtml(label)}"><span aria-hidden="true">🔊</span> اسمع الجزء</button>`;
+}
 function renderLessonAudio(id) {
   return `<section class="lesson-audio" aria-label="الاستماع للشرح">
-    <audio class="lesson-audio-player" controls preload="none" src="audio/${id}.mp3" aria-label="شرح صوتي مسجل مسبقًا للدرس">
+    <div class="lesson-audio-heading"><strong>شرح صوتي لكل جزء</strong><button class="button small ghost" type="button" data-play-full-audio="${id}">اسمع الدرس كامل</button></div>
+    <audio id="lesson-audio-${id}" class="lesson-audio-player" controls preload="none" src="audio/${id}.mp3" aria-label="شرح صوتي كامل للدرس باللهجة المصرية">
       المتصفح ده مش بيدعم تشغيل الصوت. افتح التسجيل من رابط تنزيل الملف.
     </audio>
-    <a class="lesson-audio-download" href="audio/${id}.mp3" download>نزّل التسجيل الصوتي</a>
-    <p class="lesson-audio-status">ده ملف صوتي جاهز بصوت عربي مصري؛ الموقع مش بيولّد الصوت من النص.</p>
+    <audio id="lesson-hum-${id}" class="lesson-hum-player" preload="none" loop src="audio/soft-hum.wav" aria-hidden="true"></audio>
+    <div class="lesson-audio-options">
+      <label><input type="checkbox" data-audio-hover="${id}" checked> شغّل شرح الجزء لما أقف عليه بالمؤشر</label>
+      <label><input type="checkbox" data-audio-hum="${id}" checked> همهمة هادية في الخلفية</label>
+    </div>
+    <a class="lesson-audio-download" href="audio/${id}.mp3" download>نزّل شرح الدرس كامل</a>
+    <p class="lesson-audio-status" data-audio-status="${id}" role="status" aria-live="polite">كل جزء عليه زر سماعة؛ دوسه أو فعّل التشغيل عند الوقوف عليه. الصوت مولّد مسبقًا بصوت Microsoft Hoda المصري، مش تسجيل من شخص حقيقي.</p>
   </section>`;
 }
-function renderLessonCoach(expansion) {
+function setLessonAudioStatus(id, message) {
+  const status = document.querySelector(`[data-audio-status="${id}"]`);
+  if (status) status.textContent = message;
+}
+function playLessonAudio(id, part = "", fromHover = false) {
+  const player = document.getElementById(`lesson-audio-${id}`);
+  if (!player) return;
+  const hum = document.getElementById(`lesson-hum-${id}`);
+  const humToggle = document.querySelector(`[data-audio-hum="${id}"]`);
+  const source = part ? `audio/parts/${id}-${part}.mp3` : `audio/${id}.mp3`;
+  player.pause();
+  if (player.getAttribute("src") !== source) {
+    player.setAttribute("src", source);
+    player.load();
+  }
+  player.dataset.activePart = part || "full";
+  player.dataset.hoverPart = fromHover ? part : "";
+  setLessonAudioStatus(id, part ? "بيتم تشغيل شرح الجزء اللي اخترته." : "بيتم تشغيل شرح الدرس كامل.");
+  if (hum && humToggle && humToggle.checked) {
+    hum.play().catch(() => setLessonAudioStatus(id, "الشرح شغال، لكن المتصفح منع تشغيل الهمهمة الخلفية."));
+  }
+  player.play().catch(() => {
+    if (hum) hum.pause();
+    setLessonAudioStatus(id, "المتصفح منع التشغيل التلقائي. دوس تشغيل من مشغل الصوت عشان تسمع الشرح.");
+  });
+}
+function renderLessonCoach(expansion, id) {
   return `<aside class="lesson-coach" aria-label="توضيح رفيق التعلّم">
     <div class="coach-avatar-wrap">
       <svg class="coach-avatar" viewBox="0 0 110 130" aria-hidden="true" focusable="false">
@@ -938,16 +973,16 @@ function renderLessonCoach(expansion) {
       </svg>
       <span class="coach-avatar-name">رفيق التعلّم</span>
     </div>
-    <div class="coach-speech"><span class="eyebrow">ركز في النقطة دي</span><p>${escapeHtml(expansion.coreIdea)}</p><span class="coach-caption">افهم الفكرة، وبعدها قارنها بالمثال والتدريب.</span></div>
+    <div class="coach-speech narrated-part" data-narrated-part="${id}" data-audio-part="core"><span class="eyebrow">ركز في النقطة دي</span><p>${escapeHtml(expansion.coreIdea)}</p>${renderLessonPartAudioButton(id, "core", "الفكرة الأساسية")}<span class="coach-caption">افهم الفكرة، وبعدها قارنها بالمثال والتدريب.</span></div>
   </aside>`;
 }
-function renderLessonBreakdown(expansion) {
+function renderLessonBreakdown(expansion, id) {
   return `<section class="lesson-breakdown" aria-label="تفاصيل الشرح">
     <h4>نفهمها خطوة بخطوة</h4>
     <div class="lesson-breakdown-grid">
-      <article><span>الفكرة الأساسية</span><p>${escapeHtml(expansion.coreIdea)}</p></article>
-      <article><span>مثال عملي</span><p>${escapeHtml(expansion.example)}</p></article>
-      <article><span>خد بالك</span><p>${escapeHtml(expansion.watchOut)}</p></article>
+      <article class="narrated-part" data-narrated-part="${id}" data-audio-part="core"><span>الفكرة الأساسية</span><p>${escapeHtml(expansion.coreIdea)}</p>${renderLessonPartAudioButton(id, "core", "الفكرة الأساسية")}</article>
+      <article class="narrated-part" data-narrated-part="${id}" data-audio-part="example"><span>مثال عملي</span><p>${escapeHtml(expansion.example)}</p>${renderLessonPartAudioButton(id, "example", "المثال العملي")}</article>
+      <article class="narrated-part" data-narrated-part="${id}" data-audio-part="warning"><span>خد بالك</span><p>${escapeHtml(expansion.watchOut)}</p>${renderLessonPartAudioButton(id, "warning", "التنبيه")}</article>
     </div>
   </section>`;
 }
@@ -961,7 +996,7 @@ function lessonCard(path, lesson, index) {
   return `<article class="lesson-card ${done ? "completed" : ""} ${expanded ? "expanded" : ""}" id="lesson-${id}">
     <div class="path-top"><div><span class="eyebrow">الدرس رقم ${index + 1}</span><h3>${escapeHtml(lesson.title)} ${done ? '<span class="badge">خلص ✓</span>' : ""}</h3></div><button class="button small ghost" data-toggle-lesson="${id}" aria-expanded="${expanded}">${expanded ? "اقفل الدرس" : "افتح الدرس"}</button></div>
     <p>${escapeHtml(lesson.objective)}</p>
-    <div class="lesson-detail">${renderLessonAudio(id)}<div class="lesson-copy"><p>${lesson.body}</p></div>${renderLessonCoach(expansion)}<section class="lesson-explainer"><h4>شرح أعمق</h4><p>${escapeHtml(guide.explanation)}</p></section>${renderLessonBreakdown(expansion)}${renderLessonVisual(guide)}<section class="lesson-scenario"><div><span class="eyebrow">مهمة شغل (محاكاة)</span><p>${escapeHtml(scenario.situation)}</p></div><div><strong>خطوات التنفيذ</strong><p>${escapeHtml(scenario.response)}</p></div><div class="lesson-deliverable"><strong>مخرج الشغل المطلوب</strong><p>${escapeHtml(scenario.deliverable)}</p></div></section><div class="lesson-exercise"><strong>تطبيق عملي آمن</strong><p>${escapeHtml(lesson.exercise)}</p></div><div class="panel lesson-check"><strong>اختبر نفسك:</strong><p>${escapeHtml(lesson.question)}</p><div data-quiz="${id}">${lesson.options.map((option, optIndex) => `<button class="quiz-option" data-answer="${optIndex}" data-lesson="${id}">${escapeHtml(option)}</button>`).join("")}</div><div class="feedback" id="feedback-${id}" aria-live="polite"></div><button class="button small primary" data-complete="${id}" ${done ? "disabled" : ""}>${done ? "الدرس خلص ✓" : "علّم الدرس إنه خلص"}</button></div></div>
+    <div class="lesson-detail">${renderLessonAudio(id)}<div class="lesson-copy narrated-part" data-narrated-part="${id}" data-audio-part="body"><p>${lesson.body}</p>${renderLessonPartAudioButton(id, "body", "الشرح الرئيسي")}</div>${renderLessonCoach(expansion, id)}<section class="lesson-explainer narrated-part" data-narrated-part="${id}" data-audio-part="deep"><h4>شرح أعمق</h4><p>${escapeHtml(guide.explanation)}</p>${renderLessonPartAudioButton(id, "deep", "الشرح الأعمق")}</section>${renderLessonBreakdown(expansion, id)}${renderLessonVisual(guide)}<section class="lesson-scenario"><div class="narrated-part" data-narrated-part="${id}" data-audio-part="situation"><span class="eyebrow">مهمة شغل (محاكاة)</span><p>${escapeHtml(scenario.situation)}</p>${renderLessonPartAudioButton(id, "situation", "موقف المحاكاة")}</div><div class="narrated-part" data-narrated-part="${id}" data-audio-part="response"><strong>خطوات التنفيذ</strong><p>${escapeHtml(scenario.response)}</p>${renderLessonPartAudioButton(id, "response", "خطوات التنفيذ")}</div><div class="lesson-deliverable narrated-part" data-narrated-part="${id}" data-audio-part="deliverable"><strong>مخرج الشغل المطلوب</strong><p>${escapeHtml(scenario.deliverable)}</p>${renderLessonPartAudioButton(id, "deliverable", "مخرج الشغل")}</div></section><div class="lesson-exercise narrated-part" data-narrated-part="${id}" data-audio-part="exercise"><strong>تطبيق عملي آمن</strong><p>${escapeHtml(lesson.exercise)}</p>${renderLessonPartAudioButton(id, "exercise", "التطبيق العملي")}</div><div class="panel lesson-check"><strong>اختبر نفسك:</strong><p>${escapeHtml(lesson.question)}</p><div data-quiz="${id}">${lesson.options.map((option, optIndex) => `<button class="quiz-option" data-answer="${optIndex}" data-lesson="${id}">${escapeHtml(option)}</button>`).join("")}</div><div class="feedback" id="feedback-${id}" aria-live="polite"></div><button class="button small primary" data-complete="${id}" ${done ? "disabled" : ""}>${done ? "الدرس خلص ✓" : "علّم الدرس إنه خلص"}</button></div></div>
   </article>`;
 }
 function renderTerminal() {
@@ -1080,6 +1115,58 @@ function renderAchievements() {
   return `<div class="eyebrow">كل خطوة تستحق التقدير</div><h1>إنجازاتك</h1><p class="subheading">تُمنح الشارات تلقائيًا عند إكمال الأنشطة. استمر بالتعلّم وفق وتيرتك.</p><div class="stats-grid"><div class="stat-card"><strong>${completedCount()}</strong><span>درس مكتمل</span></div><div class="stat-card"><strong>${state.labs.length}</strong><span>مختبر مكتمل</span></div><div class="stat-card"><strong>${badges.filter(b => b.earned).length}</strong><span>شارات محققة</span></div><div class="stat-card"><strong>${Math.round(completedCount() / totalLessons() * 100)}%</strong><span>تقدم المسارات</span></div></div><div class="achievement-grid">${badges.map(b => `<article class="achievement ${b.earned ? "earned" : ""}"><span class="achievement-icon">${b.icon}</span><h3>${b.title} ${b.earned ? "✓" : ""}</h3><p class="muted">${b.description}</p><span class="tag">${b.earned ? "تم الإنجاز" : "لم تُفتح بعد"}</span></article>`).join("")}</div><div class="panel" style="margin-top:1.2rem"><h2>نتائج الاختبارات</h2>${Object.keys(state.scores).length ? `<ul>${Object.entries(state.scores).map(([id, score]) => `<li>${escapeHtml(allLessons().find(item => item.id === id)?.title || id)}: ${score ? "إجابة صحيحة ✓" : "أعد المحاولة"}</li>`).join("")}</ul>` : `<p class="muted">لم تُسجل إجابات بعد. افتح درسًا وجرّب الاختبار القصير.</p>`}</div>`;
 }
 function bindViewEvents() {
+  document.querySelectorAll("[data-audio-lesson][data-audio-part]").forEach(button => button.addEventListener("click", () => {
+    const section = button.closest(".narrated-part");
+    if (section) window.clearTimeout(section.audioHoverTimer);
+    playLessonAudio(button.dataset.audioLesson, button.dataset.audioPart);
+  }));
+  document.querySelectorAll("[data-play-full-audio]").forEach(button => button.addEventListener("click", () => playLessonAudio(button.dataset.playFullAudio)));
+  document.querySelectorAll("[data-audio-hum]").forEach(input => input.addEventListener("change", () => {
+    const player = document.getElementById(`lesson-audio-${input.dataset.audioHum}`);
+    const hum = document.getElementById(`lesson-hum-${input.dataset.audioHum}`);
+    if (!player || !hum) return;
+    if (!input.checked || player.paused) hum.pause();
+    else hum.play().catch(() => setLessonAudioStatus(input.dataset.audioHum, "الشرح شغال، لكن المتصفح منع تشغيل الهمهمة الخلفية."));
+  }));
+  document.querySelectorAll(".lesson-audio-player").forEach(player => {
+    const id = player.id.replace("lesson-audio-", "");
+    const hum = document.getElementById(`lesson-hum-${id}`);
+    const humToggle = document.querySelector(`[data-audio-hum="${id}"]`);
+    if (!hum) return;
+    hum.volume = 0.045;
+    player.addEventListener("play", () => {
+      setLessonAudioStatus(id, "الشرح شغال. تقدر توقفه أو تختار جزء تاني.");
+      if (humToggle && humToggle.checked && hum.paused) hum.play().catch(() => setLessonAudioStatus(id, "الشرح شغال، لكن المتصفح منع تشغيل الهمهمة الخلفية."));
+    });
+    player.addEventListener("pause", () => {
+      hum.pause();
+      setLessonAudioStatus(id, player.dataset.hoverPart
+        ? "وقفنا الصوت لما المؤشر خرج من الجزء. مرّر عليه تاني أو دوس زر السماعة."
+        : "الشرح متوقف مؤقتًا.");
+    });
+    player.addEventListener("ended", () => {
+      hum.pause();
+      setLessonAudioStatus(id, "خلص الجزء الصوتي. تقدر تختار جزء تاني أو تسمع الدرس كامل.");
+    });
+    player.addEventListener("error", () => setLessonAudioStatus(id, "حصلت مشكلة في تحميل التسجيل الصوتي. جرّب تحديث الصفحة."));
+  });
+  document.querySelectorAll(".narrated-part").forEach(section => {
+    section.addEventListener("pointerenter", event => {
+      const id = section.dataset.narratedPart;
+      const toggle = document.querySelector(`[data-audio-hover="${id}"]`);
+      if (event.pointerType === "touch" || !toggle || !toggle.checked) return;
+      section.audioHoverTimer = window.setTimeout(() => playLessonAudio(id, section.dataset.audioPart, true), 650);
+    });
+    section.addEventListener("pointerleave", () => {
+      window.clearTimeout(section.audioHoverTimer);
+      const id = section.dataset.narratedPart;
+      const player = document.getElementById(`lesson-audio-${id}`);
+      if (player && player.dataset.hoverPart === section.dataset.audioPart) {
+        player.pause();
+        player.dataset.hoverPart = "";
+      }
+    });
+  });
   document.querySelectorAll("[data-ethics-agreement]").forEach(input => input.addEventListener("change", () => {
     const acceptButton = document.querySelector("[data-ethics-accept]");
     if (acceptButton) acceptButton.disabled = !input.checked;
